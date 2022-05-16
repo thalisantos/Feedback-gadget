@@ -4,13 +4,19 @@ import nodemailer from "nodemailer";
 
 export class NodemailerMailAdapter implements MailAdapter {
   async sendMail({ body, subject }: SendMailData) {
+
     const transport = nodemailer.createTransport({
       host: "smtp.mailtrap.io",
       port: 2525,
+      secure: false,
       auth: {
         user: "971a8548ccbbb7",
         pass: "1d4c6bb26f9ffa",
       },
+      debug: true,
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     await transport.sendMail({
@@ -19,5 +25,9 @@ export class NodemailerMailAdapter implements MailAdapter {
       subject,
       html: body,
     });
+
+
+
+
   }
 }
